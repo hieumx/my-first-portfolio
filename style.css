@@ -64,6 +64,7 @@ h2 {
 }
 /* Thiết lập chiếc hộp cha thành một Flex Container */
 .stats-container {
+    width: 100%; /* Thêm dòng này để ép chiếc hộp rộng hết cỡ */
     display: flex; /* Kích hoạt Flexbox */
     justify-content: space-between; /* Cột thông số giãn đều, tạo bố cục rộng rãi */
     align-items: center; /* Căn giữa các phần tử theo chiều dọc */
