@@ -50,9 +50,16 @@
             document.body.classList.toggle("light-theme");
         }
 
-        // --- Render danh sách kỹ năng động ---
+        // --- Render danh sách kỹ năng động (dữ liệu mô phỏng từ API) ---
         (function renderSkills() {
-            const danhSachKyNang = ["HTML5", "CSS3", "Flexbox", "JavaScript", "Git & GitHub"];
+            // Dữ liệu mô phỏng lấy từ API / Database
+            const danhSachKyNang = [
+                { ten: "HTML5", capDo: "Pro" },
+                { ten: "CSS3", capDo: "Mid" },
+                { ten: "JavaScript", capDo: "Junior" },
+                { ten: "ReactJS", capDo: "Learning" }
+            ];
+
             const khungChua = document.getElementById("danh-sach-ky-nang");
 
             if (!khungChua) return;
@@ -60,7 +67,10 @@
             danhSachKyNang.forEach(function(kyNang) {
                 const span = document.createElement('span');
                 span.className = 'skill-badge';
-                span.textContent = kyNang;
+
+                // Lấy thuộc tính 'ten' và 'capDo' từ object
+                span.textContent = `${kyNang.ten} (${kyNang.capDo})`;
+
                 khungChua.appendChild(span);
             });
         })();
