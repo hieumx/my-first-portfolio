@@ -12,6 +12,9 @@
         <h2>Mục tiêu: Trở thành Dev mà thị trường săn đón.</h2>
         <img src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png" alt="Ảnh đại diện của Hiếu" width="200">
         <p>Tôi đang trên con đường trở thành Full-Stack Developer thực chiến dưới sự hướng dẫn của AI.</p>
+
+        <div id="danh-sach-ky-nang" class="skills" aria-label="Danh sách kỹ năng"></div>
+
         <div class="button-group">
             <button class="btn btn-primary" onclick="thayDoiTen()">Đổi tên của bạn</button>
             <button class="btn btn-secondary" onclick="doiGiaoDien()">Sáng / Tối</button>
@@ -44,11 +47,23 @@
         }
 
         function doiGiaoDien() {
-            // Lệnh toggle có nghĩa là: 
-            // Nếu body chưa có class 'light-theme' thì nó THÊM vào.
-            // Nếu body đã có class 'light-theme' rồi thì nó XÓA đi.
             document.body.classList.toggle("light-theme");
         }
+
+        // --- Render danh sách kỹ năng động ---
+        (function renderSkills() {
+            const danhSachKyNang = ["HTML5", "CSS3", "Flexbox", "JavaScript", "Git & GitHub"];
+            const khungChua = document.getElementById("danh-sach-ky-nang");
+
+            if (!khungChua) return;
+
+            danhSachKyNang.forEach(function(kyNang) {
+                const span = document.createElement('span');
+                span.className = 'skill-badge';
+                span.textContent = kyNang;
+                khungChua.appendChild(span);
+            });
+        })();
     </script>
 </body>
 </html>
