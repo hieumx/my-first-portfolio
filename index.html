@@ -4,55 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Mai Xuân Hiếu</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="profile-card">
-        <h1 id="loi-chao">Chào thế giới! Tôi là Mai Xuân Hiếu</h1>
-        <h2>Mục tiêu: Trở thành Dev mà thị trường săn đón.</h2>
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png" alt="Ảnh đại diện của Hiếu" width="200">
-        <p>Tôi đang trên con đường trở thành Full-Stack Developer thực chiến dưới sự hướng dẫn của AI.</p>
-
-        <div id="danh-sach-ky-nang" class="skills" aria-label="Danh sách kỹ năng"></div>
-
-        <div class="button-group">
-            <button class="btn btn-primary" onclick="thayDoiTen()">Đổi tên của bạn</button>
-            <button class="btn btn-secondary" onclick="doiGiaoDien()">Sáng / Tối</button>
-        </div>
-        <div class="stats-container">
-            <div class="stat-item">
-                <h3>5+</h3>
-                <p>Dự án</p>
-            </div>
-            <div class="stat-item">
-                <h3>1,000+</h3>
-                <p>Dòng code</p>
-            </div>
-            <div class="stat-item">
-                <h3>99+</h3>
-                <p>Bugs Fixed</p>
-            </div>
-        </div>
-        <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Xem dự án AI</a>
-    </div>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
-       // Khai báo một Hàm (Function)
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            cyan: '#00dbde',
+                            purple: '#fc00ff'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-slate-100 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+    <div class="profile-card w-full max-w-3xl mx-4 rounded-[2rem] border border-slate-200 bg-white/90 p-10 shadow-[0_30px_80px_rgba(15,23,42,0.12)] backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
+        
+        <h1 id="loi-chao" class="text-4xl font-extrabold tracking-tight mb-3 bg-gradient-to-r from-brand-cyan via-slate-950 to-brand-purple bg-clip-text text-transparent dark:via-slate-100">Chào thế giới! Tôi là Mai Xuân Hiếu</h1>
+        <h2 class="text-lg text-slate-600 dark:text-slate-400 mb-6">Mục tiêu: Trở thành Dev mà thị trường săn đón.</h2>
+        
+        <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-8">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png" alt="Ảnh đại diện của Hiếu" width="200" class="h-48 w-48 rounded-full border-4 border-brand-cyan/40 object-cover shadow-2xl" />
+            <p class="max-w-xl text-slate-600 dark:text-slate-300">Tôi đang trên con đường trở thành Full-Stack Developer thực chiến dưới sự hướng dẫn của AI.</p>
+        </div>
+
+        <div id="danh-sach-ky-nang" class="skills mb-8 flex flex-wrap gap-3" aria-label="Danh sách kỹ năng"></div>
+
+        <div class="button-group mb-8 flex flex-wrap gap-4">
+            <button onclick="thayDoiTen()" class="bg-gradient-to-r from-brand-cyan to-brand-purple text-white font-bold py-3 px-6 rounded-xl hover:scale-110 hover:shadow-[0_0_20px_#fc00ff] transition-all duration-300">
+                Đổi tên của bạn
+            </button>
+            <button onclick="doiGiaoDien()" class="bg-slate-950 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:bg-slate-800 transition duration-300 dark:bg-slate-200 dark:text-slate-950 dark:hover:bg-slate-300">
+                Sáng / Tối
+            </button>
+        </div>
+
+        <div class="stats-container grid gap-4 sm:grid-cols-3 mb-8">
+            <div class="stat-item rounded-3xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-slate-700 dark:bg-slate-950">
+                <h3 class="text-3xl font-bold">5+</h3>
+                <p class="text-slate-500 dark:text-slate-400">Dự án</p>
+            </div>
+            <div class="stat-item rounded-3xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-slate-700 dark:bg-slate-950">
+                <h3 class="text-3xl font-bold">1,000+</h3>
+                <p class="text-slate-500 dark:text-slate-400">Dòng code</p>
+            </div>
+            <div class="stat-item rounded-3xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-slate-700 dark:bg-slate-950">
+                <h3 class="text-3xl font-bold">99+</h3>
+                <p class="text-slate-500 dark:text-slate-400">Bugs Fixed</p>
+            </div>
+        </div>
+
+        <div id="ai-chat-box" class="mt-8 rounded-3xl border border-dashed border-brand-cyan/50 bg-brand-cyan/10 p-6 dark:border-brand-cyan/40 dark:bg-slate-900/80">
+            <p id="ai-message" class="mb-4 italic text-slate-700 dark:text-slate-200">🤖 Hãy hỏi tôi bất cứ điều gì về Mai Xuân Hiếu!</p>
+            <input type="text" id="cau-hoi-cua-khach" placeholder="Nhập câu hỏi của bạn..." class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-brand-cyan focus:ring-4 focus:ring-brand-cyan/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 mb-4" />
+            <button class="bg-brand-purple text-white font-semibold py-3 px-6 rounded-xl hover:scale-105 transition duration-300 shadow-lg" onclick="goiGemini()">Gửi câu hỏi</button>
+        </div>
+    </div>
+    
+    <script>
         function thayDoiTen() {
-            // Code bên trong hàm sẽ chỉ chạy khi hàm này bị gọi
             let tenKhach = prompt("Xin chào! Khách quý tên là gì thế?");
-            
             if (tenKhach) {
                 document.getElementById("loi-chao").innerText = "Chào " + tenKhach + "! Tôi là Mai Xuân Hiếu";
             }
         }
 
         function doiGiaoDien() {
-            document.body.classList.toggle("light-theme");
+            document.documentElement.classList.toggle("dark");
         }
 
-        // --- Render danh sách kỹ năng động (dữ liệu mô phỏng từ API) ---
         (function renderSkills() {
-            // Dữ liệu mô phỏng lấy từ API / Database
             const danhSachKyNang = [
                 { ten: "HTML5", capDo: "Pro" },
                 { ten: "CSS3", capDo: "Mid" },
@@ -61,19 +88,36 @@
             ];
 
             const khungChua = document.getElementById("danh-sach-ky-nang");
-
             if (!khungChua) return;
 
             danhSachKyNang.forEach(function(kyNang) {
                 const span = document.createElement('span');
-                span.className = 'skill-badge';
-
-                // Lấy thuộc tính 'ten' và 'capDo' từ object
+                span.className = 'inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-brand-cyan/10 hover:text-brand-cyan dark:bg-slate-800 dark:text-slate-200';
                 span.textContent = `${kyNang.ten} (${kyNang.capDo})`;
-
                 khungChua.appendChild(span);
             });
         })();
+
+        // --- Đã tháo API Key an toàn để đẩy lên GitHub ---
+        
+        async function goiGemini() {
+            const hopThoai = document.getElementById("ai-message");
+            const cauHoi = document.getElementById("cau-hoi-cua-khach").value;
+
+            if (cauHoi.trim() === "") {
+                hopThoai.innerText = "⚠️ Vui lòng nhập câu hỏi trước khi gửi!";
+                return; 
+            }
+
+            // Hiển thị trạng thái đang load
+            hopThoai.innerText = "⏳ Đang kết nối với não bộ AI...";
+            
+            // Giả lập thời gian chờ (1.5 giây) như đang gọi API thật
+            setTimeout(() => {
+                hopThoai.innerText = "🤖 AI (Chế độ Demo): Tính năng kết nối trực tiếp với máy chủ Google đang tạm khóa để nâng cấp bảo mật Backend. Nhưng Hiếu thì luôn sẵn sàng nhận project mới nhé! 😎";
+                document.getElementById("cau-hoi-cua-khach").value = ""; 
+            }, 1500);
+        }
     </script>
 </body>
 </html>
