@@ -12,30 +12,42 @@
         <h2>Mục tiêu: Trở thành Dev mà thị trường săn đón.</h2>
         <img src="https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png" alt="Ảnh đại diện của Hiếu" width="200">
         <p>Tôi đang trên con đường trở thành Full-Stack Developer thực chiến dưới sự hướng dẫn của AI.</p>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="thayDoiTen()">Đổi tên của bạn</button>
+            <button class="btn btn-secondary" onclick="doiGiaoDien()">Sáng / Tối</button>
+        </div>
         <div class="stats-container">
-    <div class="stat-item">
-        <h3>5+</h3>
-        <p>Dự án</p>
-    </div>
-    <div class="stat-item">
-        <h3>1,000+</h3>
-        <p>Dòng code</p>
-    </div>
-    <div class="stat-item">
-        <h3>99+</h3>
-        <p>Bugs Fixed</p>
-    </div>
-</div>
+            <div class="stat-item">
+                <h3>5+</h3>
+                <p>Dự án</p>
+            </div>
+            <div class="stat-item">
+                <h3>1,000+</h3>
+                <p>Dòng code</p>
+            </div>
+            <div class="stat-item">
+                <h3>99+</h3>
+                <p>Bugs Fixed</p>
+            </div>
+        </div>
         <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Xem dự án AI</a>
     </div>
     <script>
-        // 1. Dùng prompt để tạo hộp thoại yêu cầu người dùng nhập tên, sau đó lưu vào một 'Biến' (Variable)
-        let tenKhach = prompt("Xin chào! Khách quý tên là gì thế?");
+       // Khai báo một Hàm (Function)
+        function thayDoiTen() {
+            // Code bên trong hàm sẽ chỉ chạy khi hàm này bị gọi
+            let tenKhach = prompt("Xin chào! Khách quý tên là gì thế?");
+            
+            if (tenKhach) {
+                document.getElementById("loi-chao").innerText = "Chào " + tenKhach + "! Tôi là Mai Xuân Hiếu";
+            }
+        }
 
-        // 2. Nếu khách có nhập tên (không bấm Hủy)
-        if (tenKhach) {
-            // 3. JS sẽ tìm thẻ h1 có id="loi-chao" và thay đổi đoạn chữ bên trong đó
-            document.getElementById("loi-chao").innerText = "Chào " + tenKhach + "! Tôi là Mai Xuân Hiếu";
+        function doiGiaoDien() {
+            // Lệnh toggle có nghĩa là: 
+            // Nếu body chưa có class 'light-theme' thì nó THÊM vào.
+            // Nếu body đã có class 'light-theme' rồi thì nó XÓA đi.
+            document.body.classList.toggle("light-theme");
         }
     </script>
 </body>

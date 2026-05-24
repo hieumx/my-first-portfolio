@@ -1,10 +1,19 @@
+/* 0. Thiết lập box sizing chung và reset margin */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* 1. Thay đổi toàn bộ font chữ và màu nền của trang web */
 body {
+    margin: 0;
+    min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #1e1e24; /* Màu nền tối cực ngầu cho dân tech */
     color: #fff; /* Chữ màu trắng */
     text-align: center; /* Căn giữa tất cả chữ, ảnh, nút bấm */
-    padding: 50px;
+    padding: 60px 20px;
 }
 
 /* 2. Làm đẹp cho tấm ảnh avatar */
@@ -48,6 +57,10 @@ h2 {
     border-radius: 20px; /* Bo tròn 4 góc của chiếc hộp */
     border: 1px solid #3a3a4a; /* Đường viền mảnh tinh tế */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Đổ bóng sâu tạo cảm giác hộp nổi lên trên màn hình */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
 /* Thiết lập chiếc hộp cha thành một Flex Container */
 .stats-container {
@@ -72,4 +85,67 @@ h2 {
     margin: 5px 0 0 0;
     color: #aaa; /* Màu xám nhẹ cho chữ mô tả */
     font-size: 14px;
+}
+/* --- GIAO DIỆN LIGHT MODE --- */
+body.light-theme {
+    background-color: #f0f2f5; /* Màu nền xám sáng nhẹ */
+    color: #1c1e21; /* Chữ chuyển sang màu đen */
+}
+
+body.light-theme .profile-card {
+    background-color: #ffffff; /* Card màu trắng tinh */
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Bóng mờ nhẹ hơn */
+}
+
+body.light-theme .stats-container {
+    background-color: #f0f2f5; /* Khối thông số màu xám sáng */
+}
+
+/* Đổi màu chữ cho h2 và thẻ p trong chế độ sáng để dễ đọc hơn */
+body.light-theme h2, 
+body.light-theme .stat-item p {
+    color: #555;
+}
+
+/* Button styles */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(252, 0, 255, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00dbde, #4f00ff);
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #ff0078, #ff8a00);
+    color: #ffffff;
+}
+
+/* Giữ giao diện mượt khi chuyển sáng/tối */
+body,
+.profile-card,
+.stats-container,
+a,
+.btn {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
