@@ -1,45 +1,52 @@
 import requests
-import time       # Trợ thủ canh giờ
-import datetime   # Trợ thủ xem đồng hồ
-import csv        # Trợ thủ ghi sổ sách
+import time
+import datetime
+import sqlite3
 
-print("🚀 Khởi động Siêu Bot theo dõi BTC/USDT...")
-print("Nhấn 'Ctrl + C' bất cứ lúc nào để dừng Bot nhé!\n")
+print("🚀 Khởi động Siêu Bot liên tục cào giá và nạp vào SQL Database...")
+print("Nhấn 'Ctrl + C' để dừng Bot.\n")
 
-# Tên cuốn sổ chúng ta sẽ ghi chép
-ten_file = "lich_su_gia_btc.csv"
+# Kết nối kho
+ket_noi = sqlite3.connect("he_thong_data.db")
+con_tro = ket_noi.cursor()
 
-# Ghi dòng tiêu đề vào file trước khi bắt đầu lặp (chỉ làm 1 lần)
-with open(ten_file, mode='a', newline='', encoding='utf-8') as file:
-    nguoi_viet = csv.writer(file)
-    # Nếu là file mới tinh, ghi 2 cái cột tiêu đề vào
-    nguoi_viet.writerow(["Thời gian", "Giá BTC (USDT)"])
+# Đảm bảo đã có kệ hàng
+con_tro.execute("""
+CREATE TABLE IF NOT EXISTS lich_su_gia (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    thoi_gian TEXT,
+    gia_usdt REAL
+)
+""")
+ket_noi.commit()
 
-# URL API của Binance
 url = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
 
-# VÒNG LẶP VÔ TẬN: Dạy Bot làm việc liên tục
 while True:
     try:
-        # 1. Chạy đi lấy dữ liệu
+        # Cào giá từ Binance
         response = requests.get(url)
         data = response.json()
         gia_btc = float(data["price"])
         
-        # 2. Xem đồng hồ lấy thời gian hiện tại
         thoi_gian_hien_tai = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        # 3. In ra Terminal cho Sếp Hiếu xem
-        print(f"[{thoi_gian_hien_tai}] 💰 Giá BTC: ${gia_btc:,.2f}")
+        print(f"[{thoi_gian_hien_tai}] 💰 Giá BTC: ${gia_btc:,.2f} -> Đang nạp vào SQL...")
         
-        # 4. Âm thầm mở sổ CSV và ghi nối tiếp vào cuối file (mode='a' là append)
-        with open(ten_file, mode='a', newline='', encoding='utf-8') as file:
-            nguoi_viet = csv.writer(file)
-            nguoi_viet.writerow([thoi_gian_hien_tai, gia_btc])
-            
-        # 5. Nghỉ ngơi 5 giây trước khi chạy vòng lặp tiếp theo
+        # Nạp dữ liệu mới vào SQL
+        cau_lenh_sql = "INSERT INTO lich_su_gia (thoi_gian, gia_usdt) VALUES (?, ?)"
+        du_lieu_nap = (thoi_gian_hien_tai, gia_btc)
+        con_tro.execute(cau_lenh_sql, du_lieu_nap)
+        ket_noi.commit()
+        
+        # Ngủ 5 giây rồi cào tiếp
         time.sleep(5)
 
+    except KeyboardInterrupt:
+        print("\n🛑 Sếp đã dừng Bot.")
+        break
     except Exception as loi:
-        print("❌ Bot vấp ngã! Đang chờ 5s để thử lại... Lỗi:", loi)
-        time.sleep(5) # Lỗi cũng phải cho nó nghỉ rồi mới gọi lại, không là sập mạng
+        print("❌ Lỗi mạng:", loi)
+        time.sleep(5)
+
+ket_noi.close()

@@ -6,7 +6,7 @@
     <title>Portfolio | Mai Xuân Hiếu</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -65,7 +65,7 @@
                 📈 Hệ thống Phân tích Dữ liệu Nội bộ (Code by Python)
             </h3>
             <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
-                <img src="btc_chart.png" alt="Biểu đồ phân tích BTC/USDT" class="w-full object-cover hover:scale-105 transition-transform duration-500">
+                <canvas id="btcChart" class="w-full h-64"></canvas>
             </div>
             <p class="mt-4 text-sm text-slate-500 dark:text-slate-400 italic">
                 * Biểu đồ được cập nhật tự động từ Bot Crawler và xử lý qua thư viện Pandas & Matplotlib.
@@ -130,6 +130,62 @@
                 document.getElementById("cau-hoi-cua-khach").value = ""; 
             }, 1500);
         }
+    </script>
+    <script>
+        // 1. Tạo một biến toàn cục để lưu trữ thực thể biểu đồ
+        let btcChartInstance = null;
+
+        // Hàm đảm nhận việc kết nối API và cập nhật biểu đồ
+        async function capNhatBieuDoRealtime() {
+            try {
+                // Gọi điện tới máy chủ FastAPI (Cổng 8000)
+                const response = await fetch('http://localhost:8000/api/gia-btc');
+                const data = await response.json(); 
+                
+                const ctx = document.getElementById('btcChart').getContext('2d');
+                
+                // 2. NẾU BIỂU ĐỒ CHƯA TỒN TẠI: Khởi tạo lần đầu tiên
+                if (btcChartInstance === null) {
+                    btcChartInstance = new Chart(ctx, {
+                        type: 'line', 
+                        data: {
+                            labels: data.thoi_gian,
+                            datasets: [{
+                                label: 'Giá BTC (USDT) - Realtime',
+                                data: data.gia_usd,
+                                borderColor: '#fc00ff',
+                                backgroundColor: 'rgba(252, 0, 255, 0.1)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: { ticks: { maxRotation: 45, minRotation: 45 } }
+                            }
+                        }
+                    });
+                    console.log("✅ Đã khởi tạo biểu đồ động lần đầu tiên.");
+                } 
+                // 3. NẾU BIỂU ĐỒ ĐÃ CÓ SẴN: Chỉ cập nhật dữ liệu mới chứ không vẽ lại
+                else {
+                    btcChartInstance.data.labels = data.thoi_gian; // Thay mảng thời gian mới
+                    btcChartInstance.data.datasets[0].data = data.gia_usd; // Thay mảng giá mới
+                    btcChartInstance.update(); // Kích hoạt hiệu ứng cập nhật mượt mà
+                    console.log("🔄 Biểu đồ đã tự động cập nhật dữ liệu mới từ Backend!");
+                }
+            } catch (error) {
+                console.error("❌ Không thể kết nối tới Backend API:", error);
+            }
+        }
+
+        // Kích hoạt chạy lần đầu ngay khi mở web
+        capNhatBieuDoRealtime();
+
+        // THẦN CHÚ REAL-TIME: Cứ mỗi 5000 mili-giây (5 giây), tự động gọi lại hàm trên một lần
+        setInterval(capNhatBieuDoRealtime, 5000);
     </script>
 </body>
 </html>
